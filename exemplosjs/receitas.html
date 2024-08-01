@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Receitas</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .pnlCatalogo {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .card {
+            margin: 10px;
+            width: 250px;
+        }
+    </style>
+</head>
+<body class="bg-warning" onload="preencheCatalogo()">
+    <div class="container-fluid">
+        <h1>Catálogo de Receitas</h1>
+        <div class="pnlCatalogo" id="catalogo">
+        </div>
+    </div>
+
+    <script>
+        const receitas = [
+            {
+                "titulo": "Arroz de Couve-Flor",
+                "imagem": "https://raw.githubusercontent.com/karolbernardesc/Mundo-2-Nivel-2/e5ecfa76e379b03e68cd2ddf916fffdb18d62a64/arroz.png",
+                "preparo": "Deixe a couve-flor picada. Adicione os ingredientes e refogue bem. Adicione sal, tampe a panela e deixe cozinhar.",
+                "ingredientes": [
+                    "Arroz",
+                    "Couve-Flor",
+                    "Cebola Média",
+                    "Azeite"
+                ]
+            },
+            {
+                "titulo": "Coxinha de Brigadeiro",
+                "imagem": "https://raw.githubusercontent.com/karolbernardesc/Mundo-2-Nivel-2/e5ecfa76e379b03e68cd2ddf916fffdb18d62a64/coxinha.png",
+                "preparo": "Junte o leite condensado, chocolate em pó e manteiga. Aqueça no fogo baixo. Envolva os morangos e passe no granulado.",
+                "ingredientes": [
+                    "Leite Condensado",
+                    "Chocolate em Pó",
+                    "Manteiga",
+                    "Morango",
+                    "Chocolate Granulado"
+                ]
+            },
+            {
+                "titulo": "Bolo de Café",
+                "imagem": "https://raw.githubusercontent.com/karolbernardesc/Mundo-2-Nivel-2/e5ecfa76e379b03e68cd2ddf916fffdb18d62a64/bolo.png",
+                "preparo": "Bata o açúcar, as gemas e o café. Adicione farinha e chocolate e mexa bem. Bata as claras e junte à mistura.",
+                "ingredientes": [
+                    "Farinha de Trigo",
+                    "Áçucar",
+                    "Café Coado",
+                    "Chocolate em Pó",
+                    "Ovos"
+                ]
+            }
+        ];
+
+        function getListaIngredientes(ingredientes) {
+            let texto = '<ul>';
+            texto += ingredientes.map(ingrediente => `<li>${ingrediente}</li>`).reduce((acc, curr) => acc + curr, '');
+            texto += '</ul>';
+            return texto;
+        }
+
+        function getCard(receita) {
+            return `
+                <div class="card">
+                    <img src="${receita.imagem}" class="card-img-top" alt="${receita.titulo}">
+                    <div class="card-body">
+                        <h5 class="card-title">${receita.titulo}</h5>
+                        <div class="card-text">
+                            ${getListaIngredientes(receita.ingredientes)}
+                            <hr>
+                            <p>${receita.preparo}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function preencheCatalogo() {
+            const catalogo = document.getElementById('catalogo');
+            const html = receitas.map(receita => getCard(receita)).reduce((acc, curr) => acc + curr, '');
+            catalogo.innerHTML = html;
+        }
+    </script>
+</body>
+</html>
